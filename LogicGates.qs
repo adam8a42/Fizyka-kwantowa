@@ -62,7 +62,7 @@ namespace LogicGates
       mutable array = [];
       for i in q
       {
-         set array += [PauliZ];
+         set array += [PauliI];
       }
       let result = Measure(array,q);
       ResetAll(q);
@@ -85,6 +85,44 @@ namespace LogicGates
          {
             CNOT(i,q2);
          }
+      }
+   }
+   operation Deutsch(type : Int) : (Result,Result)
+   {
+      use q1 = Qubit();
+      use q2 = Qubit();
+      X(q2);
+      H(q1);
+      H(q2);
+      func(q1,q2,type);
+      H(q1);
+      H(q2);
+      let res = (M(q1),M(q2));
+      Reset(q1);
+      Reset(q2);
+      return res;
+   }
+   operation func(q1:Qubit, q2:Qubit,type : Int) : Unit
+   {
+      if type==0
+      {
+         use q3 = Qubit();
+         CNOT(q3,q2);
+         Reset(q3);
+      }
+      if type==1
+      {
+         use q3 = Qubit();
+         X(q3);
+         CNOT(q3,q2);
+         Reset(q3);
+      }
+      else 
+      {
+         use q3 = Qubit();
+         H(q3);
+         CNOT(q3,q2);
+         Reset(q3);
       }
    }
 }
