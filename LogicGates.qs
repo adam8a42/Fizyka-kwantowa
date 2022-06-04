@@ -38,7 +38,7 @@ namespace LogicGates
         }
         return (t1,f1,t2,f2);
     }
-   operation Deutsch_Jozsa(n : Int, type : Int) : Result
+   operation Deutsch_Jozsa(n : Int, type : Int) : Result[]
    {
       use q = Qubit[n];
       use q2 = Qubit();
@@ -62,22 +62,21 @@ namespace LogicGates
       mutable array = [];
       for i in q
       {
-         set array += [PauliI];
+         set array += [M(i)];
       }
-      let result = Measure(array,q);
       ResetAll(q);
       Reset(q2);
-      return result;
+      return array;
    }
    operation f(n : Int, q : Qubit[], q2 : Qubit, type : Int) : Unit
    {
       if type == 0
       {
-         I(q2);
-      }
-      if type == 1
-      {
          X(q2);
+      }
+      elif type == 1
+      {
+         I(q2);
       }
       else
       {
@@ -106,23 +105,35 @@ namespace LogicGates
    {
       if type==0
       {
-         use q3 = Qubit();
-         CNOT(q3,q2);
-         Reset(q3);
+         I(q2);
       }
-      if type==1
+      elif type==1
       {
-         use q3 = Qubit();
-         X(q3);
-         CNOT(q3,q2);
-         Reset(q3);
+         X(q2);
       }
       else 
       {
-         use q3 = Qubit();
-         H(q3);
-         CNOT(q3,q2);
-         Reset(q3);
+         CNOT(q1,q2);
       }
+   }
+   operation funcTest(type : Int) : (Result,Result)
+   {
+      use (q1,q2) = (Qubit(),Qubit());
+      X(q2);
+      I(q1);
+
+      if type==0
+      {
+         X(q2);
+      }
+      elif type==1
+      {
+         I(q2);
+      }
+      else 
+      {
+         CNOT(q1,q2);
+      }
+      return (M(q2),M(q1));
    }
 }
