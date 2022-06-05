@@ -11,7 +11,9 @@ print(Deutsch_Jozsa.simulate(n = 3, type = 0))
 print(Deutsch_Jozsa.simulate(n = 4, type = 1))
 print(Deutsch_Jozsa.simulate(n = 5, type = 0))
 from LogicGates import Deutsch
-
+print(Deutsch.simulate(type = 0))
+print(Deutsch.simulate(type = 1))
+print(Deutsch.simulate(type = 2))
 from LogicGates import funcTest
 
 

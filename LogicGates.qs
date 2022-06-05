@@ -54,11 +54,6 @@ namespace LogicGates
          H(i);
       }
       H(q2);
-      //mutable measurements = 0;
-      //for i in 1..n
-      //{
-      //   set measurements += [M(q[i])];
-      //}
       mutable array = [];
       for i in q
       {
@@ -86,7 +81,7 @@ namespace LogicGates
          }
       }
    }
-   operation Deutsch(type : Int) : (Result,Result)
+   operation Deutsch(type : Int) : Result
    {
       use q1 = Qubit();
       use q2 = Qubit();
@@ -96,10 +91,8 @@ namespace LogicGates
       func(q1,q2,type);
       H(q1);
       H(q2);
-      let res = (M(q1),M(q2));
-      Reset(q1);
       Reset(q2);
-      return res;
+      return M(q1);
    }
    operation func(q1:Qubit, q2:Qubit,type : Int) : Unit
    {

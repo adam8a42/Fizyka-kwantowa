@@ -71,7 +71,7 @@ namespace Q_Teleportation {
         return (trues, equal);
     }
 
-    @EntryPoint()
+    //@EntryPoint()
     operation Driver_Code() : Unit {
         let (trues, equal) = QuantumSimulator(1000);
         let falses = 1000-trues;
