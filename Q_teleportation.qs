@@ -5,79 +5,83 @@ namespace Q_Teleportation {
     open Microsoft.Quantum.Measurement;
     open Microsoft.Quantum.Math;
     open Microsoft.Quantum.Convert;
+
+    // this program simulates quantum communication
+    // it transmites the informacion thanks to the quantum phenomena of teleportation
     
     operation Teleportation(sentMessage : Bool) : Bool {
         mutable receivedMessage = false;
 
         use register = Qubit[3] {
-            let message = register[0];
+            let message = register[0]; // register = an array of Qubits
 
             if (sentMessage) {
                 X(message); // flip the message to "true"
             }
 
-            let person_1 = register[1];
-            let person_2 = register[2];
+            let sender = register[1];
+            let recever = register[2];
 
             // entanglement
-            H(person_1);
-            CNOT(person_1, person_2);
+            H(sender);
+            // performs a Pauli-X gate on the target qubit when the control qubit is in state ∣1⟩
+            CNOT(sender, recever); 
 
-            // teleportation: this order CNOT->H transfer the state of the message QuBit onto person_1. 
-            CNOT(message, person_1);
+            // transfers the state of the message qubit onto person_1. 
+            CNOT(message, sender);
             H(message);
 
-            // Find the bell state was used
+            // finds the Bell's state of the qubit
             let messageState = M(message);
-            let person_1_state = M(person_1);
+            let senderState = M(sender);
             
             if (messageState == One) {
-                Z(person_2);
+                Z(recever);
             }
 
-            if (person_1_state == One) {
-                X(person_2);
+            if (senderState == One) {
+                X(recever);
             }
 
-            if (M(person_2) == One) {
+            if (M(recever) == One) {
                 set receivedMessage = true;
             }
 
-            ResetAll(register);
+            ResetAll(register); // restartes qubits states to make future measurements authoritative
         }
-
-
         return receivedMessage;
     }
 
-    operation QuantumSimulator(count : Int) : (Int, Int) {
+    operation Simulator(count : Int) : (Int, Int, Int) {
         mutable trues = 0;
+        mutable falses = 0;
         mutable equal = 0;
         mutable sentMessage = false;
         
-        for indx in 1..count {
-            set sentMessage = (Random([0.5, 0.5]) == 0);
+        for i in 1..count {
+            set sentMessage = (Random([0.5, 0.5]) == 0); // returns value 1 or 0 with the 50% probability on each
 
             mutable receivedMessage = Teleportation(sentMessage);
 
             if (receivedMessage) {
                 set trues += 1;
             }
+            else{
+                set falses += 1;
+            }
 
             if (receivedMessage == sentMessage) {
                 set equal += 1;
             }
         }
-        return (trues, equal);
+        return (trues, falses, equal);
     }
 
-    //@EntryPoint()
-    operation Driver_Code() : Unit {
-        let (trues, equal) = QuantumSimulator(1000);
-        let falses = 1000-trues;
-        Message($"Teleportation result: ");
-        Message($"   One: {trues}");
-        Message($"   Zero: {falses}");
-        Message($"   Equal: {equal}");
+    operation Main(numberOfAttempts : Int) : Unit {
+        let (trues, falses, equal) = Simulator(numberOfAttempts);
+        Message($"Results of teleportation: ");
+        Message($"Ones: {trues}");
+        Message($"Zeros: {falses}");
+        Message($"Equal: {equal}");
     }
 }
