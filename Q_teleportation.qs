@@ -49,7 +49,13 @@ namespace Q_Teleportation {
 
             ResetAll(register); // restartes qubits states to make future measurements authoritative
         }
+
         return receivedMessage;
+    }
+
+    operation TeleportationResult(sentMessage : Bool) : Unit
+    {
+        Message($"\n Result of teleportation is {Teleportation(sentMessage)}.");
     }
 
     operation Simulator(count : Int) : (Int, Int, Int) {
@@ -79,9 +85,60 @@ namespace Q_Teleportation {
 
     operation Main(numberOfAttempts : Int) : Unit {
         let (trues, falses, equal) = Simulator(numberOfAttempts);
-        Message($"Results of teleportation: ");
-        Message($"Ones: {trues}");
-        Message($"Zeros: {falses}");
-        Message($"Equal: {equal}");
+        Display(trues, falses, equal);
+    }
+
+    operation Display(trues : Int, falses : Int, equal : Int) : Unit
+    {
+        if(equal < 10)
+        {
+            Message($"\n-------------------------------------");
+            Message($"| Number of simulations         | {equal} |");
+            Message($"-------------------------------------");
+            Message($"| Number of false messages sent | {falses} |");
+            Message($"-------------------------------------");
+            Message($"| Number of trues messages sent | {trues} |");
+            Message($"-------------------------------------\n");
+        }
+        if(10 <= equal && equal < 100)
+        {
+            Message($"\n--------------------------------------");
+            Message($"| Number of simulations         | {equal} |");
+            Message($"--------------------------------------");
+            Message($"| Number of false messages sent | {falses}  |");
+            Message($"--------------------------------------");
+            Message($"| Number of trues messages sent | {trues}  |");
+            Message($"--------------------------------------\n");
+        }
+        if(100 <= equal && equal < 1000)
+        {
+            Message($"\n---------------------------------------");
+            Message($"| Number of simulations         | {equal} |");
+            Message($"---------------------------------------");
+            Message($"| Number of false messages sent | {falses}  |");
+            Message($"---------------------------------------");
+            Message($"| Number of trues messages sent | {trues}  |");
+            Message($"---------------------------------------\n");
+        }
+        if(1000 <= equal && equal < 10000)
+        {
+            Message($"\n----------------------------------------");
+            Message($"| Number of simulations         | {equal} |");
+            Message($"----------------------------------------");
+            Message($"| Number of false messages sent | {falses}  |");
+            Message($"----------------------------------------");
+            Message($"| Number of trues messages sent | {trues}  |");
+            Message($"----------------------------------------\n");
+        }
+        if(10000 <= equal && equal < 100000)
+        {
+            Message($"\n-----------------------------------------");
+            Message($"| Number of simulations         | {equal} |");
+            Message($"-----------------------------------------");
+            Message($"| Number of false messages sent | {falses}  |");
+            Message($"---------------------------------------");
+            Message($"| Number of trues messages sent | {trues}  |");
+            Message($"-----------------------------------------\n");
+        }
     }
 }
