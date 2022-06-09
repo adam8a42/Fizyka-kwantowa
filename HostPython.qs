@@ -6,12 +6,13 @@ namespace HostPython {
     open Microsoft.Quantum.Convert;
 
     operation SayHello(name : String) : Unit {
-        Message($"Hello, {name}!");
+        Message($"\nHello, {name}!");
     }
 
-    function Plus(x : Int, y : Int) : Int {
-    return x + y;
+    function Plus(x : Int, y : Int) : Unit {
+    Message($"\nSum is equal to: {x + y}");
     }
+
     operation randomBit() : Result
     {
         use q = Qubit();
@@ -19,17 +20,23 @@ namespace HostPython {
         return M(q);
     }
 
-    operation Qrng(n : Int) : Int
+    operation Qrng(n : Int) : Unit
     {
         mutable number = [];
-        mutable output = 0;
+        mutable range = [];
+
+        use q = Qubit();
+        X(q);
+        for i in 1..n
+        {
+            set range += [M(q)];
+        }
+        Reset(q);
+
         for i in 1..n
         {
             set number += [randomBit()];
         }
-        set output = ResultArrayAsInt(number);
-        return output;
+        Message($"\nAt range [0,{ResultArrayAsInt(range)}] random number generated: {ResultArrayAsInt(number)}");
     }
 }
-
-
