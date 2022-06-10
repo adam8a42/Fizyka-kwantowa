@@ -40,16 +40,16 @@ namespace LogicGates
     }
    operation Deutsch_Jozsa(n : Int, type : Int) : Result[]
    {
-      use q = Qubit[n];
-      use q2 = Qubit();
-      X(q2);
-      for i in q
+      use q = Qubit[n]; // function input
+      use q2 = Qubit(); // function ouitput
+      X(q2); //default - one
+      for i in q //putting input and output in superposition
       {
          H(i);
       }
       H(q2);
-      f(n,q,q2,type);
-      for i in q
+      f(n,q,q2,type); //applying the function
+      for i in q //applying Hadamard operator again
       {
          H(i);
       }
@@ -65,17 +65,17 @@ namespace LogicGates
    }
    operation f(n : Int, q : Qubit[], q2 : Qubit, type : Int) : Unit
    {
-      if type == 0
+      if type == 0 //ouput constantly 0
       {
          X(q2);
       }
-      elif type == 1
+      elif type == 1 //ouput constantly 1
       {
          I(q2);
       }
       else
       {
-         for i in q
+         for i in q //ouput 1 for half of the cases and 0 for the other half
          {
             CNOT(i,q2);
          }
