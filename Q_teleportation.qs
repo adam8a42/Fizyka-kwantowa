@@ -90,55 +90,45 @@ namespace Q_Teleportation {
 
     operation Display(trues : Int, falses : Int, equal : Int) : Unit
     {
-        if(equal < 10)
+        if(10 == equal)
         {
-            Message($"\n-------------------------------------");
-            Message($"| Number of simulations         | {equal} |");
-            Message($"-------------------------------------");
-            Message($"| Number of false messages sent | {falses} |");
-            Message($"-------------------------------------");
-            Message($"| Number of trues messages sent | {trues} |");
-            Message($"-------------------------------------\n");
+            Message($"\n.--------------------------------------------.");
+            Message($"| Number of correct messages feedback|  {equal}   |");
+            Message($"---------------------------------------------|");
+            Message($"| Number of false messages sent      |   {falses}   |");
+            Message($"---------------------------------------------|");
+            Message($"| Number of trues messages sent      |   {trues}   |");
+            Message($".--------------------------------------------.\n");
         }
-        if(10 <= equal && equal < 100)
+        if(100 == equal)
         {
-            Message($"\n--------------------------------------");
-            Message($"| Number of simulations         | {equal} |");
-            Message($"--------------------------------------");
-            Message($"| Number of false messages sent | {falses}  |");
-            Message($"--------------------------------------");
-            Message($"| Number of trues messages sent | {trues}  |");
-            Message($"--------------------------------------\n");
+            Message($"\n.--------------------------------------------.");
+            Message($"| Number of correct messages feedback|  {equal}  |");
+            Message($"---------------------------------------------|");
+            Message($"| Number of false messages sent      |  {falses}   |");
+            Message($"---------------------------------------------|");
+            Message($"| Number of trues messages sent      |  {trues}   |");
+            Message($".--------------------------------------------.\n");
         }
-        if(100 <= equal && equal < 1000)
+        if(1000 == equal)
         {
-            Message($"\n---------------------------------------");
-            Message($"| Number of simulations         | {equal} |");
-            Message($"---------------------------------------");
-            Message($"| Number of false messages sent | {falses}  |");
-            Message($"---------------------------------------");
-            Message($"| Number of trues messages sent | {trues}  |");
-            Message($"---------------------------------------\n");
+            Message($"\n.--------------------------------------------.");
+            Message($"| Number of correct messages feedback|  {equal} |");
+            Message($"---------------------------------------------|");
+            Message($"| Number of false messages sent      |  {falses}  |");
+            Message($"---------------------------------------------|");
+            Message($"| Number of trues messages sent      |  {trues}  |");
+            Message($".--------------------------------------------.\n");
         }
-        if(1000 <= equal && equal < 10000)
+        if(10000 == equal)
         {
-            Message($"\n----------------------------------------");
-            Message($"| Number of simulations         | {equal} |");
-            Message($"----------------------------------------");
-            Message($"| Number of false messages sent | {falses}  |");
-            Message($"----------------------------------------");
-            Message($"| Number of trues messages sent | {trues}  |");
-            Message($"----------------------------------------\n");
-        }
-        if(10000 <= equal && equal < 100000)
-        {
-            Message($"\n-----------------------------------------");
-            Message($"| Number of simulations         | {equal} |");
-            Message($"-----------------------------------------");
-            Message($"| Number of false messages sent | {falses}  |");
-            Message($"---------------------------------------");
-            Message($"| Number of trues messages sent | {trues}  |");
-            Message($"-----------------------------------------\n");
+            Message($"\n.--------------------------------------------.");
+            Message($"| Number of correct messages feedback| {equal} |");
+            Message($"---------------------------------------------|");
+            Message($"| Number of false messages sent      | {falses}  |");
+            Message($"---------------------------------------------|");
+            Message($"| Number of trues messages sent      | {trues}  |");
+            Message($".--------------------------------------------.\n");
         }
     }
 }
