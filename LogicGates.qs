@@ -65,8 +65,6 @@ namespace LogicGates
       {
          set array += [M(i)];
       }
-       
-      DisplayArray(array, n);
 
       ResetAll(q);
       Reset(q2);
@@ -187,18 +185,6 @@ namespace LogicGates
          Message($"|----------------------|");
          Message($"| falses | {f1} | {f2} |");
          Message($".----------------------.\n");
-      }
-   }
-
-   operation DisplayArray(array : Result[], n : Int) : Unit
-   {
-      if(array[0] == One)
-      {
-         Message($"\nArray of {array[0]}s with {n} spots:");
-      }
-      else
-      {
-          Message($"\nArray of {array[0]}es with {n} spots:");
       }
    }
 }

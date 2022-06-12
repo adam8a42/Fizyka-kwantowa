@@ -20,30 +20,30 @@ namespace Q_Teleportation {
             }
 
             let sender = register[1];
-            let receiever = register[2];
+            let receiver = register[2];
 
             // entanglement
             H(sender);
             // performs a Pauli-X gate on the target qubit when the control qubit is in state ∣1⟩
-            CNOT(sender, receiever); 
+            CNOT(sender, receiver); 
 
             // transfers the state of the message qubit onto person_1. 
             CNOT(message, sender);
             H(message);
 
-            // finds the Bell's state of the qubit
+            // finds Bell's state of the qubit
             let messageState = M(message);
             let senderState = M(sender);
             
             if (messageState == One) {
-                Z(receiever);
+                Z(recever); // changes Bell's state of receiver qubit, but doesn't impact final output
             }
 
             if (senderState == One) {
-                X(receiever);
+                X(receiver);
             }
 
-            if (M(receiever) == One) {
+            if (M(receiver) == One) {
                 set receivedMessage = true;
             }
 
@@ -90,55 +90,45 @@ namespace Q_Teleportation {
 
     operation Display(trues : Int, falses : Int, equal : Int) : Unit
     {
-        if(equal < 10)
+        if(10 == equal)
         {
-            Message($"\n-------------------------------------");
-            Message($"| Number of simulations         | {equal} |");
-            Message($"-------------------------------------");
-            Message($"| Number of false messages sent | {falses} |");
-            Message($"-------------------------------------");
-            Message($"| Number of trues messages sent | {trues} |");
-            Message($"-------------------------------------\n");
+            Message($"\n.--------------------------------------------.");
+            Message($"| Number of correct messages feedback|  {equal}   |");
+            Message($"---------------------------------------------|");
+            Message($"| Number of false messages sent      |   {falses}   |");
+            Message($"---------------------------------------------|");
+            Message($"| Number of trues messages sent      |   {trues}   |");
+            Message($".--------------------------------------------.\n");
         }
-        if(10 <= equal && equal < 100)
+        if(100 == equal)
         {
-            Message($"\n--------------------------------------");
-            Message($"| Number of simulations         | {equal} |");
-            Message($"--------------------------------------");
-            Message($"| Number of false messages sent | {falses}  |");
-            Message($"--------------------------------------");
-            Message($"| Number of trues messages sent | {trues}  |");
-            Message($"--------------------------------------\n");
+            Message($"\n.--------------------------------------------.");
+            Message($"| Number of correct messages feedback|  {equal}  |");
+            Message($"---------------------------------------------|");
+            Message($"| Number of false messages sent      |  {falses}   |");
+            Message($"---------------------------------------------|");
+            Message($"| Number of trues messages sent      |  {trues}   |");
+            Message($".--------------------------------------------.\n");
         }
-        if(100 <= equal && equal < 1000)
+        if(1000 == equal)
         {
-            Message($"\n---------------------------------------");
-            Message($"| Number of simulations         | {equal} |");
-            Message($"---------------------------------------");
-            Message($"| Number of false messages sent | {falses}  |");
-            Message($"---------------------------------------");
-            Message($"| Number of trues messages sent | {trues}  |");
-            Message($"---------------------------------------\n");
+            Message($"\n.--------------------------------------------.");
+            Message($"| Number of correct messages feedback|  {equal} |");
+            Message($"---------------------------------------------|");
+            Message($"| Number of false messages sent      |  {falses}  |");
+            Message($"---------------------------------------------|");
+            Message($"| Number of trues messages sent      |  {trues}  |");
+            Message($".--------------------------------------------.\n");
         }
-        if(1000 <= equal && equal < 10000)
+        if(10000 == equal)
         {
-            Message($"\n----------------------------------------");
-            Message($"| Number of simulations         | {equal} |");
-            Message($"----------------------------------------");
-            Message($"| Number of false messages sent | {falses}  |");
-            Message($"----------------------------------------");
-            Message($"| Number of trues messages sent | {trues}  |");
-            Message($"----------------------------------------\n");
-        }
-        if(10000 <= equal && equal < 100000)
-        {
-            Message($"\n-----------------------------------------");
-            Message($"| Number of simulations         | {equal} |");
-            Message($"-----------------------------------------");
-            Message($"| Number of false messages sent | {falses}  |");
-            Message($"---------------------------------------");
-            Message($"| Number of trues messages sent | {trues}  |");
-            Message($"-----------------------------------------\n");
+            Message($"\n.--------------------------------------------.");
+            Message($"| Number of correct messages feedback| {equal} |");
+            Message($"---------------------------------------------|");
+            Message($"| Number of false messages sent      | {falses}  |");
+            Message($"---------------------------------------------|");
+            Message($"| Number of trues messages sent      | {trues}  |");
+            Message($".--------------------------------------------.\n");
         }
     }
 }
