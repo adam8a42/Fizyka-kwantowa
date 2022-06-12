@@ -54,9 +54,19 @@ namespace GroverDivisor
         let size = BitSizeI(num);
         use q = Qubit[size];
         use output = Qubit();
-        groverSearch(n,q,phaseOracle);
-        let res = MultiM(q);
-        let answer = BoolArrayAsInt(ResultArrayAsBoolArray(res));
+        mutable isCorrect = false;
+        mutable answer = 0;
+        repeat
+        {
+            groverSearch(n,q,phaseOracle);
+            let res = MultiM(q);
+            set answer = BoolArrayAsInt(ResultArrayAsBoolArray(res));
+            markingOracle(q, output);
+            if MResetZ(output) == One and answer != 1 and answer != num {
+                set isCorrect = true;
+            }
+            ResetAll(q); 
+        } until isCorrect;
         return answer;
     }
      operation groverSearch(n: Int, q:Qubit[], phaseOracle : ((Qubit[]) => Unit is Adj)) : Unit
