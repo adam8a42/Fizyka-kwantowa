@@ -36,7 +36,7 @@ namespace Q_Teleportation {
             let senderState = M(sender);
             
             if (messageState == One) {
-                Z(recever); // changes Bell's state of receiver qubit, but doesn't impact final output
+                Z(receiver); // changes Bell's state of receiver qubit, but doesn't impact final output
             }
 
             if (senderState == One) {
