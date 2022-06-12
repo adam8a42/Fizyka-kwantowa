@@ -20,30 +20,30 @@ namespace Q_Teleportation {
             }
 
             let sender = register[1];
-            let recever = register[2];
+            let receiver = register[2];
 
             // entanglement
             H(sender);
             // performs a Pauli-X gate on the target qubit when the control qubit is in state ∣1⟩
-            CNOT(sender, recever); 
+            CNOT(sender, receiver); 
 
             // transfers the state of the message qubit onto person_1. 
             CNOT(message, sender);
             H(message);
 
-            // finds the Bell's state of the qubit
+            // finds Bell's state of the qubit
             let messageState = M(message);
             let senderState = M(sender);
             
             if (messageState == One) {
-                Z(recever);
+                Z(recever); // changes Bell's state of receiver qubit, but doesn't impact final output
             }
 
             if (senderState == One) {
-                X(recever);
+                X(receiver);
             }
 
-            if (M(recever) == One) {
+            if (M(receiver) == One) {
                 set receivedMessage = true;
             }
 
