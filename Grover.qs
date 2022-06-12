@@ -6,7 +6,9 @@ namespace Grover
     open Microsoft.Quantum.Math;
     open Microsoft.Quantum.Convert;
     open Microsoft.Quantum.Arrays;
-
+    open Microsoft.Quantum.Arithmetic;
+    open Microsoft.Quantum.Preparation;
+    
     operation runSudokuSearch(n: Int) : Result[]
     {
         Message($"");
@@ -36,7 +38,7 @@ namespace Grover
     operation sudokuOracle(q : Qubit[]) : Unit
     {
         use cases = Qubit[4];
-        CNOT(q[0],cases[0]);
+        CNOT(q[0],cases[0]); //XOR gate
         CNOT(q[1],cases[0]);
 
         CNOT(q[0],cases[1]);
@@ -49,15 +51,13 @@ namespace Grover
         CNOT(q[2],cases[3]);
 
         use output = Qubit();
+        X(output);
+        H(output);
         Controlled X(cases, output);
-        for qubit in q
-        {
-            CNOT(output,qubit);
-        }
-
-        ResetAll(cases);
-        Message($"{M(output)}");
+        X(output);
+        H(output);
         Reset(output);
+        ResetAll(cases);
     }
 
     operation groverDiffusionOperator(q : Qubit[]) : Unit
@@ -72,8 +72,6 @@ namespace Grover
     operation TestSudokuOracle():Result[]
     {
         use q = Qubit[4];
-        X(q[0]);
-        X(q[3]);
         sudokuOracle(q);
         mutable output = [];
         for i in q
