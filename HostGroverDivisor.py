@@ -8,7 +8,7 @@ N = int(np.ceil(np.pi/4 * np.sqrt(16/4)))
 from GroverDivisor import findDivisors
 x = []
 print(N)
-for i in range(100):
+for i in range(50):
     var = findDivisors.simulate(num = 12, n = N)
     x.append(var)
     print(var)
